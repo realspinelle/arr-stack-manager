@@ -195,7 +195,7 @@ export default function QbitIpBlockList() {
                             </div>
                             <input
                                 className="input input-bordered input-sm w-80"
-                                placeholder="/config/blocklist.dat"
+                                placeholder="/config/"
                                 value={settings.path}
                                 onChange={(e) =>
                                     setSettings((prev) => ({ ...prev, path: e.target.value }))
