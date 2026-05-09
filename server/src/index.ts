@@ -1,5 +1,5 @@
 import { startScheduler } from "./tasks.ts";
-import { startApi } from "./api.ts";
+import { startWebserver } from "./webserver.ts";
 import { initQbitMirror } from "./tools/qbitmirror.ts";
 import { initSettings } from "./settings.ts";
 import { initArrDeadQueueRemover } from "./tools/arrdeadqueueremover.ts";
@@ -13,4 +13,4 @@ await initSettings(); // needs to be last init
 
 
 await startScheduler();
-await startApi(); // should be last start
+await startWebserver(); // should be last start

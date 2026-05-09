@@ -2,7 +2,7 @@ import { Hono } from "hono";
 import { cors } from "hono/cors";
 import { serveStatic } from "hono/bun";
 
-export async function startApi() {
+export async function startWebserver() {
     const app = new Hono()
 
     app.use("*", cors({ origin: "http://localhost:5173" }));
@@ -16,5 +16,5 @@ export async function startApi() {
         return c.json({ received: body });
     });
 
-    app.use("/*", serveStatic({ root: "./frontend/dist" }));
+    app.use("/*", serveStatic({ root: "../frontend/dist" }));
 }
