@@ -18,13 +18,6 @@ RUN bun install:server
 
 RUN bun run build
 
-# Setup PostgreSQL user and db
-USER postgres
-RUN /etc/init.d/postgresql start && \
-    psql --command "CREATE USER arrstackmanager WITH SUPERUSER PASSWORD 'weC0xWiNGqNxkbmP2MM5Bj0gW1NYo0cZ';" && \
-    createdb -O arrstackmanager arrstackmanager
-USER root
-
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
