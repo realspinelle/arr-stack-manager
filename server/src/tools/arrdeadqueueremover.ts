@@ -14,7 +14,7 @@ async function processQueue(app: {
     url: string;
     apiKey: string;
 }, name: string) {
-    console.log(`[${name}] Checking  ...`);
+    // console.log(`[${name}] Checking  ...`);
     const client = axios.create({
         baseURL: `${app.url}/api/v3`,
         headers: {
@@ -24,14 +24,14 @@ async function processQueue(app: {
 
     const { data } = await client.get("/queue?pageSize=2000");
 
-    console.log(`[${name}] Found ${data.records.length} in queue`);
+    // console.log(`[${name}] Found ${data.records.length} in queue`);
     for (const item of data.records as MediaQueueItem[]) {
         const stalled = (item.status == "unknown" || (item.status == "warning" && item.sizeleft > 0) || item.status == "queued" || item.status == "paused") && minutesSince(item.added) >= (await getSetting<number>("arrdeadqueueremover.time.stalled") || 30);
 
         if (stalled && !removedStalled.includes(item.title)) {
             removedStalled.push(item.title);
 
-            console.log(`[${name}] Removing stalled: ${item.title} added ${minutesSince(item.added)} minutes ago`);
+            // console.log(`[${name}] Removing stalled: ${item.title} added ${minutesSince(item.added)} minutes ago`);
 
             await client.delete(`/queue/${item.id}`, {
                 params: {
