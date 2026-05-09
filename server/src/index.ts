@@ -18,6 +18,7 @@ async function checkDatabase(): Promise<boolean> {
 
 async function main() {
     if (!await checkDatabase()) return console.log("DB not working ...");
+    
     await initArrDeadQueueRemover();
     await initQbitIpBlockList();
     await initQbitMirror();

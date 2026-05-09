@@ -1,9 +1,9 @@
-import { prisma } from "./prisma"
+import { prisma } from "./prisma";
 
 const defaultSettings: Record<string, string> = {
     username: "admin",
     password: "password"
-}
+};
 
 export async function addSetting(name: string, defaultValue: string) {
     defaultSettings[name] = defaultValue;
@@ -18,6 +18,15 @@ export async function getSetting<T extends string | boolean | number = string>(n
     const num = Number(value);
     if (!isNaN(num) && value != "") return num as T;
     return value as T;
+}
+
+export async function setSetting(name: string, value: string): Promise<void> {
+    console.log(name, value)
+    await prisma.setting.upsert({
+        where: { name },
+        update: { value },
+        create: { name, value }
+    });
 }
 
 export async function initSettings() {

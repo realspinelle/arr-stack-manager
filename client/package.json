@@ -10,9 +10,13 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@heroicons/react": "^2.2.0",
     "@tailwindcss/vite": "^4.3.0",
+    "cron-parser": "^5.5.0",
+    "cronstrue": "^3.14.0",
     "react": "^19.2.5",
     "react-dom": "^19.2.5",
+    "react-router-dom": "^7.15.0",
     "tailwindcss": "^4.3.0"
   },
   "devDependencies": {
