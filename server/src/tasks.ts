@@ -52,7 +52,7 @@ function startJob(job: Tasks) {
     console.log(`Started job "${job.name}" → ${job.cron}`);
 }
 
-async function syncJobs() {
+export async function syncJobs() {
     try {
         const jobs = await prisma.tasks.findMany();
         const dbIds = new Set(jobs.map((j) => j.id));

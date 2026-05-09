@@ -6,6 +6,7 @@ import { getSetting, setSetting } from "./settings";
 import { createSession, validateSession, deleteSession } from "./session";
 import { prisma } from "./prisma";
 import { validate as cronValidate } from "node-cron";
+import { syncJobs } from "./tasks";
 export async function startWebserver() {
     const app = new Hono();
 
@@ -312,7 +313,7 @@ export async function startWebserver() {
                 ...(enabled !== undefined && { enabled }),
             },
         });
-
+        await syncJobs();
         return c.json({ success: true, task });
     });
 
