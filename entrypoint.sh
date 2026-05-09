@@ -1,6 +1,12 @@
 #!/bin/bash
 set -e
 
+# Initialize PostgreSQL data directory if it doesn't exist
+if [ ! -d "/var/lib/postgresql/17/main" ]; then
+  echo "Initializing PostgreSQL data directory..."
+  su -c "/usr/lib/postgresql/17/bin/initdb -D /var/lib/postgresql/17/main" postgres
+fi
+
 # Start PostgreSQL
 service postgresql start
 
