@@ -18,7 +18,7 @@ export async function runQbitIpBlockList() {
 
     const decompressed = await gunzipAsync(Buffer.from(list.data));
     const text = decompressed.toString('utf-8');
-    await fs.writeFile(path.join(await getSetting("qbitipblocklist.path") + "blocklist.p2p"), text)
+    await fs.writeFile(path.join((await getSetting("qbitipblocklist.path"))!, "blocklist.p2p"), text)
 }
 
 export async function initQbitIpBlockList() {
