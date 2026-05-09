@@ -6,24 +6,26 @@ service postgresql start
 
 # Wait for PostgreSQL to be ready
 echo "Waiting for PostgreSQL to start..."
-until pg_isready -U postgres; do
+until su -c "pg_isready" postgres; do
   sleep 1
 done
 
-if ! psql -U postgres -lqt | cut -d \| -f 1 | grep -qw arrstackmanager; then
+# Init DB only if not already done
+if ! su -c "psql -lqt | cut -d \| -f 1 | grep -qw arrstackmanager" postgres; then
   echo "Initializing database..."
-  psql -U postgres --command "CREATE USER arrstackmanager WITH SUPERUSER PASSWORD 'weC0xWiNGqNxkbmP2MM5Bj0gW1NYo0cZ';"
-  createdb -U postgres -O arrstackmanager arrstackmanager
+  su -c "psql --command \"CREATE USER arrstackmanager WITH SUPERUSER PASSWORD 'weC0xWiNGqNxkbmP2MM5Bj0gW1NYo0cZ';\"" postgres
+  su -c "createdb -O arrstackmanager arrstackmanager" postgres
   echo "Database initialized!"
 else
   echo "Database already exists, skipping init."
 fi
 
-echo "PostgreSQL is ready!"
+export NODE_ENV=production
 
 # Run Prisma migrations
 cd /app/server
 bunx prisma migrate deploy
+bun prisma generate
 
-# Start supervisord (manages postgres + app)
+# Start supervisord
 exec /usr/bin/supervisord
