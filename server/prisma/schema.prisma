@@ -1,0 +1,29 @@
+generator client {
+    provider = "prisma-client"
+    output   = "../generated/prisma"
+}
+
+datasource db {
+    provider = "postgresql"
+}
+
+model Setting {
+    id    Int    @id @default(autoincrement())
+    name  String @unique
+    value String
+}
+
+model Tasks {
+    id      Int     @id @default(autoincrement())
+    name    String  @unique
+    cron    String
+    enabled Boolean @default(false)
+}
+
+model QbitClients {
+    id       Int     @id @default(autoincrement())
+    name     String
+    url      String
+    username String?
+    password String?
+}
