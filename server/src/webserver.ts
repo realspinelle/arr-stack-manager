@@ -1,6 +1,7 @@
 import { Hono } from "hono";
 import { cors } from "hono/cors";
 import { serveStatic } from "hono/bun";
+import Bun from "bun";
 
 export async function startWebserver() {
     const app = new Hono()
@@ -17,4 +18,11 @@ export async function startWebserver() {
     });
 
     app.use("/*", serveStatic({ root: "../frontend/dist" }));
+
+    const server = Bun.serve({
+        port: 3000,
+        fetch: app.fetch,
+    });
+
+    console.log(`Server running at http://localhost:${server.port}`);
 }
