@@ -318,6 +318,7 @@ export async function startWebserver() {
     });
 
     app.use("/*", serveStatic({ root: "../client/dist" }));
+    app.get("/*", serveStatic({ path: "../client/dist/index.html" }));
 
     const server = Bun.serve({
         port: 3000,
